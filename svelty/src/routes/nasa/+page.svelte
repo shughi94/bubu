@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Youtube from 'svelte-youtube-embed';
-	import Image from '../../blocks/Image.svelte'
+	import Image from '../../blocks/Image.svelte';
 
 	function goToPage() {
 		goto(`/`);
@@ -10,7 +10,7 @@
 
 	let data = null;
 	let video_id = null;
-	let thumbnailUrl = null;
+	let image_url = null;
 	let error = null;
 	let loading = true;
 
@@ -23,7 +23,12 @@
 			}
 			data = await response.json();
 			video_id = data.url.replace('https://www.youtube.com/embed/', '').replace('?rel=0', '');
-			thumbnailUrl = 'https://img.youtube.com/vi/${video_id}/maxresdefault.jpg'; //TODO?
+
+			if (data.hdurl) {
+				image_url = data.hdurl;
+			} else {
+				image_url = data.url;
+			}
 		} catch (err) {
 			error = err.message;
 		} finally {
@@ -32,7 +37,19 @@
 	});
 </script>
 
-<h1>CIAO123</h1>
+{#if data}
+{#if data.media_type == 'video'}
+	<div>
+		<Youtube id={video_id}></Youtube>
+	</div>
+{:else if data.media_type == 'image' && data && data.hdurl}
+	<div class="fullscreen-image"><Image src={data.hdurl} alt="potd" /></div>
+{:else}
+	<div class="data-field">
+		<p>No support found for: {data.media_type}</p>
+	</div>
+{/if}
+{/if}
 <div class="container">
 	{#if loading}
 		<p class="loading">Loading...</p>
@@ -40,46 +57,36 @@
 		<p class="error">Error: {error}</p>
 	{:else}
 		<div class="data-field">
-			<p>Date:</p>
-			<span>{data.date}</span>
+			<h2>{data.title}</h2>
 		</div>
 		<div class="data-field">
-			<p>Explanation:</p>
-			<span>{data.explanation}</span>
+			<p>{data.explanation}</p>
 		</div>
-		<div class="data-field">
-			<p>Title:</p>
-			<span>{data.title}</span>
-		</div>
-		{#if data.media_type == 'video'}
-			<div class="data-field">
-				<Youtube id={video_id}></Youtube>
-			</div>
-		{:else if data.media_type == 'image'}
-			<div class="data-field">
-				<Image class="image" src={data.url} alt="potd"/>
-			</div>
-		{:else}
-			<div class="data-field">
-				<p>No support found for: {data.media_type}</p>
-			</div>
-		{/if}
 	{/if}
+	<button on:click={goToPage}>BACK</button>
 </div>
 
-<button on:click={goToPage}>BACK</button>
-
 <style>
-	.container {
-		max-width: 600px;
-		margin: 0 auto;
-		padding: 20px;
-		font-family: Arial, sans-serif;
+	.fullscreen-image {
+		padding-top:5px;
+		display: flex;
+		justify-content: center;
+		margin: auto;
+  		align-items: center;
+        width: 85%;
+		height: auto;
+		padding-bottom: 2%;
 	}
 
-	.image {
-		width: var(--size);
-		height: auto;
+	.container {
+		margin: auto;
+		justify-content: center;
+		align-items: center;
+		padding: 3%;
+		width: 80%;
+		background-color:rgb(184, 184, 184);
+		border:3px solid black;
+		border-radius: 5px;
 	}
 
 	.error {
@@ -90,15 +97,10 @@
 		font-size: 18px;
 	}
 
-	.data-field {
-		margin-bottom: 10px;
-	}
-
-	.data-field p {
+	.data-field h2 {
 		font-weight: bold;
 	}
 
-	.data-field span {
-		margin-left: 10px;
+	.data-field p {
 	}
 </style>

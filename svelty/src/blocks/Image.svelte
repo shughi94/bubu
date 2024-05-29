@@ -6,6 +6,16 @@
 	<img src="https://c.tenor.com/On7kvXhzml4AAAAi/loading-gif.gif" alt="Loading..." />
 {/if}
 
+<style>
+	img {
+		max-width: 100%;
+   	 	max-height: 100%;
+    	width: auto;
+    	height: auto;
+	}
+</style>
+
+
 <script>
 	import { onMount } from 'svelte'
 	export let src;
