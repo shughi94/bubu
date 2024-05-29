@@ -10,5 +10,4 @@ RUSTY_COMMAND="cd /home/shughi/Documents/proj/bubu/rusty && cargo run"
 ssh $USER@$PIIP "$RUSTY_COMMAND &"
 ssh $USER@$PIIP "$SVELTY_COMMAND &"
 
-
-echo "Server on $PIIP has been restarted."
+echo "Server on $PIIP has been started."
