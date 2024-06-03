@@ -33,6 +33,7 @@
     .tft-button {background-color: hsl(24, 100%, 50%);}
     .daily-button {background-color: #00ff66;}
     .nasa-button {background-color: #0800ff;}
+    .meal-button {background-color: #7700ff;}
 
 </style>
 
@@ -40,3 +41,4 @@
 <button class="tft-button" on:click={() => goToPage('tft')}>TFT_MIXER</button>
 <button class="daily-button" on:click={() => goToPage('daily_api')}>Daily_API</button>
 <button class="nasa-button" on:click={() => goToPage('nasa')}>NASA</button>
+<button class="meal-button" on:click={() => goToPage('meal')}>MEAL</button>
