@@ -37,45 +37,58 @@
 	});
 </script>
 
-{#if data}
-{#if data.media_type == 'video'}
-	<div>
-		<Youtube id={video_id}></Youtube>
+<button class="back-button" on:click={goToPage}>BACK</button>
+<div class="layout">
+	<div class="container">
+		{#if data}
+			<div class="title-field">
+				<h2>{data.title}</h2>
+			</div>
+			<div class="image-field">
+				{#if loading}
+					<p class="loading">Loading...</p>
+				{:else if error}
+					<p class="error">Error: {error}</p>
+				{:else if data.media_type == 'video'}
+					<div>
+						<Youtube id={video_id}></Youtube>
+					</div>
+				{:else if data.media_type == 'image' && data && data.hdurl}
+					<div class="fullscreen-image"><Image src={data.hdurl} alt="potd" /></div>
+				{:else}
+					<div class="data-field">
+						<p>No support found for: {data.media_type}</p>
+					</div>
+				{/if}
+			</div>
+			<div class="info-field">
+				<p>{data.explanation}</p>
+			</div>
+		{/if}
 	</div>
-{:else if data.media_type == 'image' && data && data.hdurl}
-	<div class="fullscreen-image"><Image src={data.hdurl} alt="potd" /></div>
-{:else}
-	<div class="data-field">
-		<p>No support found for: {data.media_type}</p>
-	</div>
-{/if}
-{/if}
-<div class="container">
-	{#if loading}
-		<p class="loading">Loading...</p>
-	{:else if error}
-		<p class="error">Error: {error}</p>
-	{:else}
-		<div class="data-field">
-			<h2>{data.title}</h2>
-		</div>
-		<div class="data-field">
-			<p>{data.explanation}</p>
-		</div>
-	{/if}
-	<button on:click={goToPage}>BACK</button>
 </div>
 
 <style>
+	.layout {
+		height: 100%;
+		width: 100%;
+		display: grid;
+		grid:
+			'title-field' 10%
+			'image-field' 70%
+			'info-field' auto
+			/ 1fr;
+		gap: 5px;
+	}
+
+	.back-button {
+		margin-left: 2%;
+		margin-top: 2%;
+		padding: 5px;
+	}
+
 	.fullscreen-image {
-		padding-top:5px;
-		display: flex;
-		justify-content: center;
-		margin: auto;
-  		align-items: center;
-        width: 85%;
-		height: auto;
-		padding-bottom: 2%;
+		
 	}
 
 	.container {
@@ -84,8 +97,8 @@
 		align-items: center;
 		padding: 3%;
 		width: 80%;
-		background-color:rgb(184, 184, 184);
-		border:3px solid black;
+		background-color: rgb(184, 184, 184);
+		border: 3px solid black;
 		border-radius: 5px;
 	}
 
@@ -97,10 +110,18 @@
 		font-size: 18px;
 	}
 
-	.data-field h2 {
-		font-weight: bold;
+	.image-field {
+		grid-area: image-field;
 	}
 
-	.data-field p {
+	.title-field {
+		font-weight: bold;
+		grid-area: title-field;
+		text-align: center;
+	}
+
+	.info-field {
+		font-size: medium;
+		grid-area: info-field;
 	}
 </style>
