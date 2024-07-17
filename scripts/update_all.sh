@@ -1,0 +1,2 @@
+python3 meal_random_recipe.py
+python3 nasa_image_of_the_day.py
