@@ -1,6 +1,7 @@
 use axum::Json;
 use serde_json::{json, Map, Value};
 use std::fs;
+use log::{info, error};
 
 async fn is_empty(value: &Value) -> bool {
     match value {
@@ -55,14 +56,22 @@ async fn combine_fields(json_value: Value) -> Value {
 
 pub async fn random() -> Json<Value> {
     let the_file = "ayylmao/random_meal.json";
+    info!("Reading random meal from file: {}", the_file);
 
-    let file = fs::File::open(the_file).expect("file should open read only");
+    let file = fs::File::open(the_file).unwrap_or_else(|e| {
+        error!("Failed to open file {}: {}", the_file, e);
+        panic!("file should open read only: {}", e);
+    });
     let json: serde_json::Value =
-        serde_json::from_reader(file).expect("file should be proper JSON");
+        serde_json::from_reader(file).unwrap_or_else(|e| {
+            error!("Failed to parse JSON from file {}: {}", the_file, e);
+            panic!("file should be proper JSON: {}", e);
+        });
 
+    info!("Processing meal data: removing empty fields and combining ingredients");
     let new_json = remove_empty(json).await;
     let final_json = combine_fields(new_json).await;
 
-    // println!("{}", serde_json::to_string_pretty(&final_json).unwrap());
+    info!("Successfully processed random meal");
     Json(json!(final_json))
 }
