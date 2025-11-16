@@ -3,6 +3,7 @@ use serde_json::{Value, json};
 use log::info;
 #[path = "nasa/nasa.rs"] mod nasa;
 #[path = "meal/meal.rs"] mod meal;
+#[path = "geo/geo.rs"] mod geo;
 
 pub async fn create_router() -> Router {
     info!("Creating router with routes: /, /nasa/potd, /meal/random");
@@ -10,6 +11,7 @@ pub async fn create_router() -> Router {
     .route("/", get(root))
     .route("/nasa/potd", get(nasa))
     .route("/meal/random", get(meal))
+    .route("/geo/random", get(geo))
 }
 
 // root
@@ -28,4 +30,10 @@ async fn nasa() -> Json<Value> {
 async fn meal() -> Json<Value> {
     info!("Meal random endpoint accessed");
     meal::random().await
+}
+
+// geo
+async fn geo() -> Json<Value> {
+    info!("Geography random endpoint accessed");
+    geo::random().await
 }

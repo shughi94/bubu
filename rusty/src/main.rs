@@ -5,18 +5,10 @@ use log::info;
 
 #[tokio::main]
 async fn main() {
-    // Initialize logger to write to a file
-    flexi_logger::Logger::try_with_env_or_str("info")
-        .unwrap()
-        .log_to_file(flexi_logger::FileSpec::default().directory("logs").basename("app"))
-        .rotate(
-            flexi_logger::Criterion::Size(10 * 1024 * 1024), // 10 MB
-            flexi_logger::Naming::Timestamps,
-            flexi_logger::Cleanup::KeepLogFiles(7), // Keep 7 log files
-        )
-        .format(flexi_logger::detailed_format)
-        .start()
-        .unwrap();
+    
+    // Initialize logger to stdout/stderr
+    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info"))
+        .init();
 
     info!("Starting server on 0.0.0.0:3000");
 
