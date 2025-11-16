@@ -1,32 +1,24 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script>
-    import { goto } from '$app/navigation';
+    // import { goto } from '$app/navigation';
 
-    function goToPage() {
-        goto(`/`);
-    }
+    // function goToPage() {
+    //     goto(`/`);
+    // }
+
+	import BackButton from '../../components/backButton.svelte';
 
 	let total = 0;
     async function add(param) {
-		// const response = await fetch('/api/tft', {
-		// 	method: 'POST',
-		// 	body: JSON.stringify({"param": param}),
-		// 	headers: {
-		// 		'content-type': 'application/json'
-		// 	}
-		// });
 
-		// total = await response.json();
 		let bubu = 5
 	}
 
 </script>
 
 <div class="page-container">
-	<button class="back-button" on:click={goToPage}>
-		<i class="fa fa-arrow-left"></i> BACK
-	</button>
+	<BackButton />
 	<div class="content-wrapper">
 		<h1>TFT</h1>
 		<div class="button-group">
@@ -52,40 +44,6 @@
 		overflow-y: auto;
 		overflow-x: hidden;
 		-webkit-overflow-scrolling: touch;
-	}
-
-	.back-button {
-		position: sticky;
-		top: 0;
-		z-index: 100;
-		margin: 15px;
-		padding: 15px 25px;
-		background-color: rgba(44, 44, 44, 0.95);
-		color: white;
-		border: 2px solid white;
-		border-radius: 25px;
-		font-size: 1.4rem;
-		font-weight: 600;
-		cursor: pointer;
-		backdrop-filter: blur(10px);
-		-webkit-tap-highlight-color: transparent;
-		touch-action: manipulation;
-		min-height: 50px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 10px;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-		transition: all 0.2s ease;
-	}
-
-	.back-button:active {
-		transform: scale(0.95);
-		background-color: rgba(60, 60, 60, 0.95);
-	}
-
-	.back-button i {
-		font-size: 1.2rem;
 	}
 
 	.content-wrapper {
