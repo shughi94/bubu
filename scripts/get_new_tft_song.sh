@@ -1,3 +1,4 @@
+#!/bin/bash
 cd ../../tft-mixer
 source venv/bin/activate
 python3 main.py --pogs --only_file
