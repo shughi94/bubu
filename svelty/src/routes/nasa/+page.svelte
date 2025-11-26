@@ -13,6 +13,16 @@
 	let image_url = null;
 	let error = null;
 	let loading = true;
+	let showControls = false;
+	let mouseMoveTimeout;
+
+	function handleMouseMove() {
+		showControls = true;
+		clearTimeout(mouseMoveTimeout);
+		mouseMoveTimeout = setTimeout(() => {
+			showControls = false;
+		}, 2000);
+	}
 
 	onMount(async () => {
 		try {
@@ -22,7 +32,11 @@
 				throw new Error('Failed to fetch data');
 			}
 			data = await response.json();
-			video_id = data.url.replace('https://www.youtube.com/embed/', '').replace('?rel=0', '');
+
+			if(data.url)
+            {
+				video_id = data.url.replace('https://www.youtube.com/embed/', '').replace('?rel=0', '');
+			}
 
 			if (data.hdurl) {
 				image_url = data.hdurl;
@@ -37,13 +51,17 @@
 	});
 </script>
 
-<div class="page-container">
-	<BackButton />
-	<div class="content-wrapper">
+<div class="page-container" role="main" on:mousemove={handleMouseMove} on:touchstart={handleMouseMove}>
+	<div class="controls-overlay" class:visible={showControls}>
+		<BackButton />
 		{#if data}
 			<div class="title-field">
 				<h1>{data.title}</h1>
 			</div>
+		{/if}
+	</div>
+	<div class="content-wrapper">
+		{#if data}
 			<div class="media-field">
 				{#if loading}
 					<div class="loading-container">
@@ -87,22 +105,53 @@
 	}
 
 
+	.controls-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 100;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.controls-overlay.visible {
+		opacity: 1;
+	}
+
+	.controls-overlay :global(.back-button) {
+		pointer-events: auto;
+		position: absolute;
+		top: 10px;
+		left: 10px;
+	}
+
 	.content-wrapper {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 15px;
+		padding: 0;
 		gap: 20px;
 		max-width: 100%;
 		box-sizing: border-box;
+		margin-top: 0;
 	}
 
 	.title-field {
-		width: 100%;
-		padding: 15px;
-		background-color: rgba(184, 184, 184, 0.1);
-		border-radius: 15px;
+		position: absolute;
+		top: 10px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: auto;
+		max-width: 90%;
+		padding: 8px 16px;
+		background-color: rgba(0, 0, 0, 0.8);
+		border: 2px solid rgba(0, 0, 0, 0.9);
+		border-radius: 25px;
 		text-align: center;
+		box-sizing: border-box;
+		pointer-events: none;
 	}
 
 	.title-field h1 {
@@ -120,8 +169,9 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		min-height: 300px;
-		max-height: 60vh;
+		min-height: 400px;
+		max-height: 75vh;
+		position: relative;
 	}
 
 	.image-container,
@@ -137,8 +187,8 @@
 	}
 
 	.image-container :global(img) {
+		width: 100%;
 		max-width: 100%;
-		max-height: 60vh;
 		object-fit: contain;
 		border-radius: 15px;
 	}
@@ -146,8 +196,7 @@
 	.video-container :global(iframe) {
 		width: 100%;
 		height: 100%;
-		min-height: 300px;
-		max-height: 60vh;
+		min-height: 400px;
 		border-radius: 15px;
 	}
 
@@ -179,6 +228,8 @@
 		background-color: rgba(184, 184, 184, 0.1);
 		border-radius: 15px;
 		margin-bottom: 20px;
+		margin-left: 15px;
+		margin-right: 15px;
 	}
 
 	.info-field p {
@@ -191,16 +242,13 @@
 
 	/* Landscape orientation adjustments */
 	@media (orientation: landscape) {
-		.media-field {
-			max-height: 70vh;
-		}
-
-		.image-container :global(img) {
-			max-height: 70vh;
+		.content-wrapper {
+			margin-top: 0;
+			padding-top: 20px;
 		}
 
 		.video-container :global(iframe) {
-			max-height: 70vh;
+			max-height: 80vh;
 		}
 
 		.title-field h1 {
@@ -214,8 +262,27 @@
 
 	/* Smaller screens */
 	@media (max-height: 800px) {
+		.content-wrapper {
+			margin-top: 0;
+			padding-top: 20px;
+		}
+
+		.title-field {
+			padding-top: 90px;
+		}
+
 		.media-field {
-			max-height: 50vh;
+			max-height: 65vh;
+			min-height: 350px;
+		}
+
+		.image-container :global(img) {
+			max-height: 65vh;
+		}
+
+		.video-container :global(iframe) {
+			max-height: 65vh;
+			min-height: 350px;
 		}
 
 		.title-field h1 {
