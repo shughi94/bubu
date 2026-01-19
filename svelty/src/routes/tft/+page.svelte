@@ -107,21 +107,17 @@
 		}
 	}
 
-	/* Smaller screens */
-	@media (max-height: 800px) {
-		.play-button {
-			width: 250px;
-			height: 250px;
-			font-size: 5rem;
+	/* 7-inch screen optimization (800x480) */
+	@media (max-width: 800px) and (max-height: 480px) {
+		.content-wrapper {
+			padding: 10px;
 		}
-	}
 
-	/* Very small screens */
-	@media (max-width: 400px) {
 		.play-button {
 			width: 200px;
 			height: 200px;
 			font-size: 4rem;
 		}
 	}
+
 </style>

@@ -120,13 +120,6 @@
 		opacity: 1;
 	}
 
-	.controls-overlay :global(.back-button) {
-		pointer-events: auto;
-		position: absolute;
-		top: 10px;
-		left: 10px;
-	}
-
 	.content-wrapper {
 		flex: 1;
 		display: flex;
@@ -186,13 +179,6 @@
 		background-color: rgba(184, 184, 184, 0.1);
 	}
 
-	.image-container :global(img) {
-		width: 100%;
-		max-width: 100%;
-		object-fit: contain;
-		border-radius: 15px;
-	}
-
 	.video-container :global(iframe) {
 		width: 100%;
 		height: 100%;
@@ -240,61 +226,46 @@
 		text-align: justify;
 	}
 
-	/* Landscape orientation adjustments */
-	@media (orientation: landscape) {
+	/* 7-inch screen optimization (800x480) */
+	@media (max-width: 800px) and (max-height: 480px) {
 		.content-wrapper {
 			margin-top: 0;
-			padding-top: 20px;
-		}
-
-		.video-container :global(iframe) {
-			max-height: 80vh;
-		}
-
-		.title-field h1 {
-			font-size: 1.4rem;
-		}
-
-		.info-field p {
-			font-size: 1rem;
-		}
-	}
-
-	/* Smaller screens */
-	@media (max-height: 800px) {
-		.content-wrapper {
-			margin-top: 0;
-			padding-top: 20px;
+			padding: 5px;
 		}
 
 		.title-field {
+			top: 5px;
+			padding: 6px 12px;
 			padding-top: 90px;
 		}
 
+		.title-field h1 {
+			font-size: 1rem;
+		}
+
 		.media-field {
-			max-height: 65vh;
-			min-height: 350px;
+			max-height: 280px;
+			min-height: 280px;
 		}
 
 		.image-container :global(img) {
-			max-height: 65vh;
+			max-height: 280px;
 		}
 
 		.video-container :global(iframe) {
-			max-height: 65vh;
-			min-height: 350px;
-		}
-
-		.title-field h1 {
-			font-size: 1.4rem;
+			max-height: 280px;
+			min-height: 280px;
 		}
 
 		.info-field {
-			padding: 15px;
+			padding: 10px;
+			margin: 5px;
 		}
 
 		.info-field p {
-			font-size: 1rem;
+			font-size: 0.85rem;
+			line-height: 1.4;
 		}
 	}
+
 </style>

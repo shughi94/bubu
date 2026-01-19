@@ -173,6 +173,45 @@
 		}
 	}
 
+	/* 7-inch screen optimization (800x480) */
+	@media (max-width: 800px) and (max-height: 480px) {
+		.content-wrapper {
+			padding: 8px;
+			gap: 10px;
+		}
+
+		.meal-header {
+			padding: 10px;
+		}
+
+		.meal-header h1 {
+			font-size: 1.2rem;
+		}
+
+		.image-section {
+			padding: 5px;
+		}
+
+		.image-section :global(img) {
+			max-height: 180px;
+		}
+
+		.instructions-section {
+			padding: 10px;
+			margin-bottom: 10px;
+		}
+
+		.instructions-section h2 {
+			font-size: 1.1rem;
+			margin-bottom: 8px;
+		}
+
+		.instructions-section p {
+			font-size: 0.85rem;
+			line-height: 1.4;
+		}
+	}
+
 	/* Smaller screens */
 	@media (max-height: 800px) {
 		.meal-header {

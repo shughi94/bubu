@@ -385,25 +385,76 @@
 		}
 	}
 
-	/* Smaller screens */
-	@media (max-height: 800px) {
+	/* 7-inch screen optimization (800x480) */
+	@media (max-width: 800px) and (max-height: 480px) {
+		.content-wrapper {
+			padding: 10px;
+			gap: 12px;
+		}
+
+		.quiz-header {
+			padding: 10px;
+		}
+
 		.quiz-header h1 {
-			font-size: 1.8rem;
+			font-size: 1.3rem;
+			margin-bottom: 10px;
+		}
+
+		.question {
+			padding: 12px;
+		}
+
+		.question-text {
+			font-size: 1rem;
+			margin-bottom: 5px;
 		}
 
 		.country-name {
-			font-size: 1.8rem;
+			font-size: 1.4rem;
+		}
+
+		.choices-grid {
+			gap: 8px;
 		}
 
 		.choice-button {
-			padding: 15px 20px;
+			padding: 10px 15px;
+			font-size: 1rem;
+			min-height: 45px;
+		}
+
+		.choice-label {
 			font-size: 1.2rem;
-			min-height: 60px;
+			min-width: 30px;
+		}
+
+		.result-section {
+			gap: 12px;
+		}
+
+		.result-message {
+			padding: 12px;
+		}
+
+		.result-message i {
+			font-size: 2rem;
 		}
 
 		.result-message p {
-			font-size: 1.2rem;
+			font-size: 1rem;
+		}
+
+		.result-message strong {
+			font-size: 1.1rem;
+		}
+
+		.next-button {
+			padding: 12px 20px;
+			font-size: 1.1rem;
+			min-height: 45px;
 		}
 	}
+
 </style>
 

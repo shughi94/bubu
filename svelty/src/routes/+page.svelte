@@ -183,24 +183,34 @@
         }
     }
 
-    /* Smaller adjustments for very small 7-inch screens */
-    @media (max-height: 900px) {
+    /* 7-inch screen optimization (800x480) */
+    @media (max-width: 800px) and (max-height: 480px) {
+        .main-container {
+            padding: 10px;
+        }
+
         .button-grid {
-            gap: 20px;
-            height: 85vh;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 1fr;
+            gap: 10px;
+            height: auto;
+            max-height: 100%;
+            max-width: 100%;
         }
 
         button {
-            min-height: 170px;
+            min-height: 120px;
+            padding: 10px;
         }
 
         button i {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
         }
 
         button span {
-            font-size: 1.8rem;
+            font-size: 1.3rem;
         }
     }
+
 </style>

@@ -14,5 +14,7 @@ if r.status_code == 200:
     with open(PATH, 'wb') as f:
         for chunk in r.iter_content(1024):
             f.write(chunk)
+else:
+    print(f"Error: {r.status_code} - {r.text}")
 
 print("Done getting image of the day from nasa.")
